@@ -154,7 +154,7 @@ async function print(text) {
   output.appendChild(cursor);
 }
 
-/* LOGIN (STABLE + SECURE) */
+/* LOGIN (FIXED + STABLE) */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -186,7 +186,7 @@ function login() {
   }, 800);
 }
 
-/* BOOT SEQUENCE */
+/* BOOT */
 async function boot(p) {
   await print("ACCESS GRANTED");
   await print("CONNECTING STELLAR NETWORK...");
@@ -203,111 +203,27 @@ async function boot(p) {
   await print("ACCESS PERSONNEL ARCHIVE: TYPE 'staff' OR OPEN /scientist.html");
 }
 
-/* ================= FILE SYSTEM ================= */
+/* FILE SYSTEM */
 const fs = {
   "/": {
     type: "dir",
     files: {
-
       helios: {
         type: "dir",
         files: {
-          "log1.txt": {
-            type: "file",
-            content:
-`HELIOS REPORT:
-Photonic anomaly exhibits recursive self-awareness.
-
-Subject adapts to observation.`
-          },
-          "incident_03.txt": {
-            type: "file",
-            content:
-`INCIDENT 03:
-Containment failed internally.
-
-Final frame: observer duplication detected.`
-          }
+          "log1.txt": { type:"file", content:"HELIOS REPORT: Subject adapts to observation." }
         }
       },
-
       aether: {
         type: "dir",
         files: {
-          "signal.txt": {
-            type: "file",
-            content:
-`AETHER SIGNAL:
-Non-local frequency detected.
-
-Signal strengthens when observed.`
-          },
-          "echo_cycle.txt": {
-            type: "file",
-            content:
-`ECHO CYCLE:
-Messages contain prior messages.
-
-Loop instability increasing.`
-          }
+          "signal.txt": { type:"file", content:"AETHER SIGNAL: Strength increases when observed." }
         }
       },
-
-      null: {
-        type: "dir",
-        files: {
-          "corrupt.dat": {
-            type: "file",
-            content:
-`NULL FILE:
-Origin missing.
-
-File exists without creation event.`
-          },
-          "black_record.txt": {
-            type: "file",
-            content:
-`BLACK RECORD:
-Content changes per observer.
-
-Comparison prohibited.`
-          }
-        }
-      },
-
       residual: {
         type: "dir",
         files: {
-          "observer.log": {
-            type: "file",
-            content:
-`RESIDUAL SYSTEM:
-System reconstructs observer behavior.
-
-Conclusion: observation is bidirectional.`
-          },
-          "mirror_event.txt": {
-            type: "file",
-            content:
-`MIRROR EVENT:
-System predicts input before execution.
-
-Latency decreasing.`
-          }
-        }
-      },
-
-      classified: {
-        type: "dir",
-        files: {
-          "entry.lock": {
-            type: "file",
-            content:
-`CLASSIFIED NODE:
-Not indexed in system map.
-
-Access implies prior failure of containment.`
-          }
+          "observer.log": { type:"file", content:"System reconstructs observer behavior." }
         }
       }
     }
@@ -365,16 +281,28 @@ function run(cmd) {
   else if (cmd === "signal") {
     signalLevel++;
     print("connecting signal...");
-
     if (signalLevel === 1) print("weak transmission");
     else if (signalLevel === 2) print("signal stabilizing");
     else if (signalLevel === 3) print("WARNING: SIGNAL RESPONSE DETECTED");
     else print("??? : observer identified");
   }
 
-  else if (cmd === "clear") output.innerHTML = "";
-
   else if (cmd === "staff") {
-  print("REDIRECTING TO PERSONNEL ARCHIVE...");
-  window.location.href = "scientist.html";
+    print("REDIRECTING TO PERSONNEL ARCHIVE...");
+    setTimeout(() => {
+      window.location.href = "scientist.html";
+    }, 800);
+  }
+
+  else if (cmd === "clear") {
+    output.innerHTML = "";
+  }
+
+  else {
+    print("unknown command");
+  }
 }
+</script>
+
+</body>
+</html>
