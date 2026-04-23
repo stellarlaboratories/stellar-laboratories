@@ -84,23 +84,43 @@ button:hover {
 
 <!-- LOGIN SCREEN -->
 <div id="loginScreen">
-  <h1 class="glitch">STELLAR LABORATORIES</h1>
-  <p>SECURE ACCESS REQUIRED</p>
-  <input type="password" id="password" placeholder="enter access code">
-  <button onclick="login()">ENTER</button>
-  <p id="msg"></p>
-</div>
 
-<!-- MAIN TERMINAL -->
-<div id="terminal">
-  <div id="output"></div>
-  <input id="commandInput" placeholder="type command...">
-</div>
+  <!-- HEADER BAR -->
+  <div style="text-align:center; margin-bottom:20px;">
+    <h2 style="letter-spacing:3px;">UNITED SYSTEMS CLEARANCE PORTAL</h2>
+    <p style="opacity:0.7;">Stellar Laboratories Division // Secure Access Node</p>
+  </div>
 
-<!-- HIDDEN SYSTEM -->
-<div id="hiddenInterface">
-  <div id="hiddenOutput"></div>
-  <input id="hiddenInput" placeholder="...">
+  <!-- WARNING PANEL -->
+  <div style="border:1px solid #00ffcc; padding:10px; width:300px; text-align:center; margin-bottom:15px;">
+    ⚠ AUTHORIZED PERSONNEL ONLY ⚠
+    <br>
+    UNAUTHORIZED ACCESS IS MONITORED
+  </div>
+
+  <!-- STATUS PANEL -->
+  <div style="border:1px solid #00ffcc; padding:10px; width:300px; margin-bottom:15px;">
+    SYSTEM STATUS: ONLINE<br>
+    NETWORK: STABLE<br>
+    RESIDUAL LAYER: <span class="glitch">DETECTED</span>
+  </div>
+
+  <!-- LOGIN BOX -->
+  <div style="display:flex; flex-direction:column; align-items:center;">
+
+    <input type="password" id="password" placeholder="Enter Clearance Code">
+
+    <button onclick="login()">AUTHENTICATE</button>
+
+    <p id="msg" style="margin-top:10px; color:#ff3b3b;"></p>
+
+  </div>
+
+  <!-- FOOTER NOTE -->
+  <p style="margin-top:20px; font-size:12px; opacity:0.5; text-align:center;">
+    All access attempts are logged and reviewed by Stellar Oversight Division
+  </p>
+
 </div>
 
 <script>
