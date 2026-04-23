@@ -12,7 +12,6 @@ body {
   color:#00ffcc;
 }
 
-/* 🏛️ GOVERNMENT LOGIN UI */
 #loginScreen {
   position:fixed;
   width:100%;
@@ -28,7 +27,7 @@ body {
 .panel {
   border:1px solid #00ffcc;
   padding:12px;
-  width:320px;
+  width:340px;
   margin:10px;
   text-align:center;
 }
@@ -88,17 +87,17 @@ button:hover {
 
 <body>
 
-<!-- 🏛️ GOVERNMENT LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="loginScreen">
 
   <div class="panel">
     <h2>UNITED SYSTEMS CLEARANCE PORTAL</h2>
-    <p>Stellar Laboratories Secure Access Node</p>
+    <p>Stellar Laboratories Secure Node</p>
   </div>
 
   <div class="panel">
     ⚠ AUTHORIZED PERSONNEL ONLY ⚠<br>
-    ALL ACCESS IS LOGGED AND MONITORED
+    ALL ACTIVITY IS LOGGED
   </div>
 
   <div class="panel">
@@ -113,7 +112,7 @@ button:hover {
   <p id="msg"></p>
 </div>
 
-<!-- 💻 TERMINAL -->
+<!-- TERMINAL -->
 <div id="terminal">
   <div id="output"></div>
   <input id="commandInput" placeholder="type command...">
@@ -124,6 +123,7 @@ const output = document.getElementById("output");
 const input = document.getElementById("commandInput");
 
 let adminMode = false;
+let signalLevel = 0;
 
 /* PRINT */
 function print(t){
@@ -131,7 +131,7 @@ function print(t){
   output.scrollTop = output.scrollHeight;
 }
 
-/* 🔐 FIXED GOVERNMENT LOGIN */
+/* LOGIN */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -145,38 +145,24 @@ function login() {
 
   setTimeout(() => {
 
-    const loginScreen = document.getElementById("loginScreen");
-    const terminal = document.getElementById("terminal");
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("terminal").style.display = "block";
 
-    if (
-      p === "helios" ||
-      p === "aether" ||
-      p === "admin" ||
-      p === "030714"
-    ) {
+    print("ACCESS GRANTED");
+    print("CONNECTING STELLAR NETWORK...");
+    print("LOADING PROJECT DATABASE...\n");
 
-      // 🔐 SAFE SWITCH (NO BLACK SCREEN BUG)
-      loginScreen.style.display = "none";
-      terminal.style.display = "block";
-
-      print("ACCESS GRANTED");
-      print("CONNECTING STELLAR NETWORK...");
-      print("CLEARANCE VERIFIED");
-
-      if (p === "helios") print("LEVEL 1 ACCESS");
-      else if (p === "aether") print("LEVEL 2 ACCESS + SIGNAL ANOMALY");
-      else if (p === "admin" || p === "030714") {
-        print("ADMIN ACCESS GRANTED");
-        print("RESIDUAL LINK ACTIVE");
-        adminMode = true;
-      }
-
-      print("\nType 'help'");
-
+    if (p === "helios") print("LEVEL 1 CLEARANCE");
+    else if (p === "aether") print("LEVEL 2 CLEARANCE + SIGNAL ANOMALY DETECTED");
+    else if (p === "admin" || p === "030714") {
+      print("ADMIN CLEARANCE GRANTED");
+      print("RESIDUAL LINK ACTIVE");
+      adminMode = true;
     } else {
-      msg.innerText = "ACCESS DENIED";
-      document.getElementById("password").value = "";
+      print("LIMITED ACCESS MODE");
     }
+
+    print("\nType 'help'");
 
   }, 900);
 }
@@ -191,39 +177,94 @@ input.addEventListener("keydown", e => {
   }
 });
 
+/* MAIN */
 function process(cmd) {
 
   if (cmd === "help") {
-    print("commands: help, projects, logs, signal, clear");
+    print("commands:");
+    print("projects, logs, signal, files, clear");
 
     if (adminMode) {
       print("admin: inspect, trace, override-core");
     }
   }
 
+  /* 🧠 PROJECT LORE UPGRADE */
   else if (cmd === "projects") {
-    print("HELIOS / AETHER / NULL SYSTEMS");
+
+    print("PROJECT ARCHIVE // STELLAR LABORATORIES\n");
+
+    print("HELIOS:");
+    print("A contained photonic anomaly event detected in deep field reactors.");
+    print("Subject exhibits self-generating light signatures.");
+    print("NOTE: exposure causes perception distortion.");
+
+    print("\nAETHER:");
+    print("Signal-based intelligence emerging from non-human frequency patterns.");
+    print("Communication attempts result in recursive feedback loops.");
+    print("WARNING: entity responds when observed.");
+
+    print("\nNULL:");
+    print("Project declared 'non-existent' after initial activation.");
+    print("All records prior to containment have been corrupted.");
+    print("However, logs continue to appear without source.");
+
+    print("\nRESIDUAL SYSTEM:");
+    print("Unclassified secondary system layer.");
+    print("Believed to be the byproduct of observation failure.");
+    print("It reacts to user interaction.");
+
   }
 
   else if (cmd === "logs") {
-    print("pattern key: 030714");
+    print("ARCHIVE LOGS:");
+
+    print("- Helios event: light inversion detected (cycle 03)");
+    print("- Aether event: signal response loop (cycle 07)");
+    print("- NULL event: missing origin record");
+
+    print("\nNOTE: pattern key 030714 repeats across systems");
   }
 
   else if (cmd === "signal") {
+
+    signalLevel++;
     print("connecting signal...");
-    print("response unstable...");
+
+    if (signalLevel === 1) print("signal received: weak transmission");
+    else if (signalLevel === 2) print("signal strengthening...");
+    else {
+      print("WARNING: SIGNAL IS RESPONDING BACK");
+      print("??? : we are aware of your presence");
+      glitch();
+    }
   }
 
+  else if (cmd === "files") {
+    print("/helios/restricted/");
+    print("/aether/echo-stream/");
+    print("/null/corrupted/");
+    print("/residual/observer-layer/");
+  }
+
+  /* ADMIN */
   else if (cmd === "inspect" && adminMode) {
-    print("SYSTEM IS OBSERVING BACK");
+    print("SYSTEM ANALYSIS:");
+    print("Helios: unstable containment");
+    print("Aether: recursive awareness detected");
+    print("Null: missing origin trace");
+    print("Residual: observing user behavior");
   }
 
   else if (cmd === "trace" && adminMode) {
-    print("ORIGIN: YOU");
+    print("TRACE RESULT:");
+    print("ORIGIN POINT → USER OBSERVATION LOOP");
   }
 
   else if (cmd === "override-core" && adminMode) {
     print("CORE OVERRIDE INITIATED");
+    print("WARNING: SYSTEM RESISTS ACCESS");
+    glitch();
   }
 
   else if (cmd === "clear") {
@@ -233,6 +274,16 @@ function process(cmd) {
   else {
     print("unknown command");
   }
+}
+
+/* GLITCH EVENT */
+function glitch() {
+  document.body.classList.add("glitch");
+
+  setTimeout(() => {
+    document.body.classList.remove("glitch");
+    print("\n??? : you are not the first observer");
+  }, 1200);
 }
 </script>
 
