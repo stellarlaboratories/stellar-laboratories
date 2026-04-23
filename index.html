@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>Untitled</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Stellar Laboratories</title>
+<title>Stellar Laboratories // Secure Terminal</title>
 
 <style>
 body {
@@ -23,7 +12,7 @@ body {
   color:#00ffcc;
 }
 
-/* LOGIN SCREEN */
+/* LOGIN */
 #loginScreen {
   position:fixed;
   width:100%;
@@ -52,14 +41,14 @@ button:hover {
 
 .error { color:red; }
 
-/* TERMINALS */
+/* TERMINAL */
 #terminal, #hiddenInterface {
   display:none;
   padding:20px;
 }
 
 #output, #hiddenOutput {
-  height:70vh;
+  height:65vh;
   overflow-y:auto;
   white-space:pre-wrap;
 }
@@ -74,11 +63,12 @@ button:hover {
   outline:none;
 }
 
+/* HIDDEN SYSTEM */
 #hiddenInterface {
   color:#ff3b3b;
 }
 
-/* GLITCH EFFECT */
+/* GLITCH */
 .glitch {
   animation: glitch 0.2s infinite;
 }
@@ -96,10 +86,9 @@ button:hover {
 <!-- LOGIN -->
 <div id="loginScreen">
   <h1 class="glitch">STELLAR LABORATORIES</h1>
-  <p>ENTER ACCESS CODE</p>
+  <p>SECURE ACCESS REQUIRED</p>
   <input type="password" id="password">
-  <button onclick="login()">LOGIN</button>
-  <p id="error" class="error"></p>
+  <button onclick="login()">ENTER</button>
 </div>
 
 <!-- MAIN TERMINAL -->
@@ -155,17 +144,18 @@ function hiddenPrint(t){
   hiddenOutput.scrollTop = hiddenOutput.scrollHeight;
 }
 
-/* LOGIN */
+/* LOGIN BOOT SEQUENCE */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
 
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("terminal").style.display = "block";
 
-  print("Initializing Stellar Laboratories...");
-  print("Checking system integrity...");
-  print("Core systems: ONLINE");
-  print("Anomaly layer: DETECTED");
+  print("BOOTING STELLAR LABORATORIES...");
+  print("Loading core systems...");
+  print("Checking containment layers...");
+  print("Signal integrity: UNKNOWN");
+  print("Residual layer: DETECTED");
 
   setTimeout(() => {
 
@@ -174,47 +164,60 @@ function login() {
     }
 
     else if (p === "aether") {
-      print("LEVEL 2 ACCESS GRANTED + SIGNAL ANOMALY");
+      print("LEVEL 2 ACCESS GRANTED");
+      print("WARNING: SIGNAL ECHO DETECTED");
     }
 
     else if (p === "admin" || p === "030714") {
       print("ADMIN ACCESS GRANTED");
       print("WARNING: RESIDUAL SYSTEM LINK ACTIVE");
-      print("THIS LEVEL WAS NEVER MEANT TO BE ACCESSED");
+      print("THIS SYSTEM WAS NOT MEANT TO BE ACCESSED");
       adminMode = true;
     }
 
     else {
-      print("ACCESS GRANTED (LIMITED)");
+      print("ACCESS GRANTED (LIMITED USER)");
     }
 
-    print("Type 'help'");
+    print("\nType 'help' for commands");
 
   }, 1200);
 }
 
-/* MAIN ARG SYSTEM */
+/* MAIN SYSTEM */
 function process(cmd) {
 
   if (cmd === "help") {
-    print("help, projects, logs, signal, null, override, clear");
+    print("COMMANDS:");
+    print("help, projects, logs, files, signal, null, override, clear");
 
     if (adminMode) {
-      print("inspect, override-core");
+      print("inspect, override-core, trace");
     }
   }
 
   else if (cmd === "projects") {
-    print("HELIOS → energy anomaly");
-    print("AETHER → signal response");
-    print("NULL → undefined origin");
+    print("PROJECT DATABASE\n");
+    print("HELIOS → energy containment anomaly");
+    print("AETHER → signal interception system");
+    print("NULL → undefined origin point");
   }
 
   else if (cmd === "logs") {
-    print("Helios: absence created (03)");
+    print("LOG ARCHIVE\n");
+    print("Helios: light collapse event (03)");
     print("Aether: response detected (07)");
-    print("NULL system active");
-    print("pattern key: 030714");
+    print("Null: system overlap anomaly");
+    print("Pattern key: 030714");
+  }
+
+  /* 📁 FAKE FILE SYSTEM (NEW ARG FEATURE) */
+  else if (cmd === "files") {
+    print("ROOT DIRECTORY:");
+    print("/helios/logs/");
+    print("/aether/signals/");
+    print("/null/undefined/");
+    print("/restricted/admin/");
   }
 
   else if (cmd === "signal") {
@@ -222,20 +225,22 @@ function process(cmd) {
     print("connecting signal...");
 
     if (signalCount === 1) print("signal received: OPEN");
-    else if (signalCount === 2) print("signal distortion increasing...");
+    else if (signalCount === 2) print("signal echo detected...");
     else {
-      print("...it is responding");
+      print("...it is responding directly");
       glitch();
     }
   }
 
   else if (cmd === "null") {
     print("ACCESSING NULL...");
-    setTimeout(() => print("override required"), 1000);
+    setTimeout(() => print("no origin found"), 900);
+    setTimeout(() => print("system inconsistency detected"), 1500);
+    setTimeout(() => print("override required"), 2100);
   }
 
   else if (cmd === "override") {
-    print("bypassing system...");
+    print("bypassing containment...");
     setTimeout(() => {
       document.getElementById("terminal").style.display = "none";
       hiddenUI.style.display = "block";
@@ -243,13 +248,13 @@ function process(cmd) {
     }, 1200);
   }
 
-  /* ADMIN COMMANDS */
+  /* 🔴 ADMIN COMMANDS */
   else if (cmd === "inspect") {
     if (!adminMode) return print("ACCESS DENIED");
 
     print("INSPECTING RESIDUAL SYSTEM...");
-    print("Helios: unstable collapse");
-    print("Aether: external response loop");
+    print("Helios: unstable collapse detected");
+    print("Aether: external response loop active");
     print("Null: self-referential anomaly");
     print("STATUS: SYSTEM IS OBSERVING BACK");
   }
@@ -264,6 +269,13 @@ function process(cmd) {
     }, 1200);
   }
 
+  else if (cmd === "trace") {
+    if (!adminMode) return print("ACCESS DENIED");
+
+    print("TRACING SIGNAL ORIGIN...");
+    print("ORIGIN: YOU");
+  }
+
   else if (cmd === "clear") {
     output.innerHTML = "";
   }
@@ -273,21 +285,22 @@ function process(cmd) {
   }
 }
 
-/* GLITCH */
+/* GLITCH EVENT */
 function glitch() {
   document.body.classList.add("glitch");
 
   setTimeout(() => {
     document.body.classList.remove("glitch");
-    print("\n??? : you are not the first observer");
+    print("\n??? : observation has consequences");
   }, 1000);
 }
 
 /* HIDDEN SYSTEM */
 function startHidden() {
   hiddenPrint("connection hijacked");
-  hiddenPrint("stellar control layer breached");
+  hiddenPrint("stellar labs containment failure detected");
   hiddenPrint("you are inside the residual system");
+  hiddenPrint("we are what remains of observation");
 }
 
 function processHidden(cmd) {
@@ -298,23 +311,19 @@ function processHidden(cmd) {
 
   else if (cmd === "signal") hiddenPrint("you generated it");
 
-  else if (cmd === "helios") hiddenPrint("light opened breach");
+  else if (cmd === "helios") hiddenPrint("light opened first breach");
 
-  else if (cmd === "aether") hiddenPrint("it answered first");
+  else if (cmd === "aether") hiddenPrint("it learned your presence");
 
   else if (cmd === "null") hiddenPrint("it was never built");
 
-  else if (cmd === "030714") hiddenPrint("pattern accepted");
+  else if (cmd === "030714") hiddenPrint("pattern confirmed");
 
-  else if (cmd === "exit") hiddenPrint("no exit exists");
+  else if (cmd === "exit") hiddenPrint("exit not permitted");
 
   else hiddenPrint("we are still here");
 }
 </script>
 
 </body>
-</html>
-    
-  </body>
-  
 </html>
