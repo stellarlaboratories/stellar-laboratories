@@ -12,7 +12,7 @@ body {
   color:#00ffcc;
 }
 
-/* LOGIN GATE (BLOCKS EVERYTHING) */
+/* LOGIN GATE */
 #loginScreen {
   position:fixed;
   width:100%;
@@ -62,6 +62,7 @@ button:hover {
   outline:none;
 }
 
+/* RESIDUAL SYSTEM */
 #hiddenInterface {
   color:#ff3b3b;
 }
@@ -81,10 +82,10 @@ button:hover {
 
 <body>
 
-<!-- 🔐 LOGIN GATE -->
+<!-- LOGIN SCREEN -->
 <div id="loginScreen">
   <h1 class="glitch">STELLAR LABORATORIES</h1>
-  <p>AUTHORIZED ACCESS REQUIRED</p>
+  <p>SECURE ACCESS REQUIRED</p>
   <input type="password" id="password" placeholder="enter access code">
   <button onclick="login()">ENTER</button>
   <p id="msg"></p>
@@ -141,7 +142,7 @@ function hiddenPrint(t){
   hiddenOutput.scrollTop = hiddenOutput.scrollHeight;
 }
 
-/* 🔐 LOGIN GATE LOGIC */
+/* 🔐 FIXED LOGIN SYSTEM */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -151,52 +152,57 @@ function login() {
     return;
   }
 
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("terminal").style.display = "block";
-
-  print("AUTHENTICATING...");
-  print("CONTACTING STELLAR NETWORK...");
+  msg.innerText = "AUTHENTICATING...";
 
   setTimeout(() => {
 
-    if (p === "helios") {
-      print("LEVEL 1 ACCESS GRANTED");
-    }
+    if (
+      p === "helios" ||
+      p === "aether" ||
+      p === "admin" ||
+      p === "030714"
+    ) {
 
-    else if (p === "aether") {
-      print("LEVEL 2 ACCESS GRANTED");
-      print("SIGNAL ANOMALY DETECTED");
-    }
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("terminal").style.display = "block";
 
-    else if (p === "admin" || p === "030714") {
-      print("ADMIN ACCESS GRANTED");
-      print("WARNING: RESIDUAL SYSTEM LINK ACTIVE");
-      print("THIS INTERFACE SHOULD NOT BE USED");
-      adminMode = true;
+      print("ACCESS GRANTED");
+      print("CONNECTING STELLAR NETWORK...");
+      print("SYSTEM SYNC COMPLETE");
+
+      if (p === "helios") print("LEVEL 1 ACCESS");
+      else if (p === "aether") print("LEVEL 2 ACCESS + SIGNAL ANOMALY");
+      else if (p === "admin" || p === "030714") {
+        print("ADMIN ACCESS GRANTED");
+        print("WARNING: RESIDUAL LINK ACTIVE");
+        adminMode = true;
+      }
+
+      print("\nType 'help'");
+
     }
 
     else {
-      print("ACCESS GRANTED (LIMITED USER MODE)");
+      msg.innerText = "ACCESS DENIED";
+      document.getElementById("password").value = "";
     }
 
-    print("\nType 'help'");
-
-  }, 1200);
+  }, 900);
 }
 
 /* MAIN SYSTEM */
 function process(cmd) {
 
   if (cmd === "help") {
-    print("commands: help, projects, logs, files, signal, null, override, clear");
+    print("help, projects, logs, files, signal, null, override, clear");
 
     if (adminMode) {
-      print("admin: inspect, override-core, trace");
+      print("inspect, override-core, trace");
     }
   }
 
   else if (cmd === "projects") {
-    print("HELIOS / AETHER / NULL ACTIVE SYSTEMS");
+    print("HELIOS / AETHER / NULL SYSTEMS ACTIVE");
   }
 
   else if (cmd === "logs") {
@@ -215,7 +221,7 @@ function process(cmd) {
     print("connecting signal...");
 
     if (signalCount > 2) {
-      print("...it is responding back");
+      print("...it is responding");
       glitch();
     }
   }
