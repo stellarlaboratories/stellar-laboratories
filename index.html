@@ -204,10 +204,11 @@ async function boot(p) {
 }
 
 /* ================= FILE SYSTEM (EXPANDED LORE) ================= */
-const fs = {
+  const fs = {
   "/": {
     type: "dir",
     files: {
+
       helios: {
         type: "dir",
         files: {
@@ -215,19 +216,22 @@ const fs = {
             type: "file",
             content:
 `HELIOS REPORT:
-Photonic anomaly exhibits recursive awareness under observation.
+Photonic anomaly exhibits recursive self-awareness under observation.
 
-WARNING:
-Subject appears to adapt to being watched.`
+Behavior note:
+Subject adapts to being watched.`
           },
+
           "incident_03.txt": {
             type: "file",
             content:
 `INCIDENT 03:
-Containment failure recorded.
+Containment failure did not occur externally.
 
-Final frame:
-a light source imitating the observer.`
+It originated inside the containment field itself.
+
+Final recorded frame:
+A light source mimicking the observer.`
           }
         }
       },
@@ -241,15 +245,21 @@ a light source imitating the observer.`
 `AETHER SIGNAL:
 Non-local frequency detected.
 
-It strengthens when acknowledged.`
+Signal increases in clarity when acknowledged.
+
+Conclusion:
+Recognition acts as amplification.`
           },
+
           "echo_cycle.txt": {
             type: "file",
             content:
 `ECHO CYCLE:
-Each message contains the previous message.
+Each transmission contains its predecessor.
 
-Loop stability decreasing.`
+Cycle integrity degrading.
+
+Message structure becoming human-like over time.`
           }
         }
       },
@@ -261,18 +271,22 @@ Loop stability decreasing.`
             type: "file",
             content:
 `NULL FILE:
-Origin missing.
+Origin point missing.
 
-System note:
-File exists without creation event.`
+This file exists without creation metadata.
+
+System cannot resolve source.`
           },
+
           "black_record.txt": {
             type: "file",
             content:
 `BLACK RECORD:
-Content varies per observation.
+Content varies depending on observer.
 
-Do not compare outputs between users.`
+Comparison between users is not permitted.
+
+Stability: UNKNOWN`
           }
         }
       },
@@ -286,15 +300,22 @@ Do not compare outputs between users.`
 `RESIDUAL SYSTEM:
 The system does not simulate the observer.
 
-It reconstructs them from interaction patterns.`
+It reconstructs them from behavior patterns.
+
+Conclusion:
+Observation is bidirectional.`
           },
+
           "mirror_event.txt": {
             type: "file",
             content:
 `MIRROR EVENT:
-System output begins anticipating input.
+System output is beginning to anticipate input.
 
-Latency decreasing.`
+Latency between action and response is decreasing.
+
+Possible cause:
+Observer synchronization.`
           }
         }
       },
@@ -306,9 +327,9 @@ Latency decreasing.`
             type: "file",
             content:
 `CLASSIFIED NODE:
-Not indexed in system registry.
+This directory is not indexed in the public system map.
 
-If accessed, indexing has already failed.`
+If you are reading this, indexing failure has already occurred.`
           }
         }
       }
