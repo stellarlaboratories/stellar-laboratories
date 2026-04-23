@@ -12,7 +12,7 @@ body {
   color:#00ffcc;
 }
 
-/* ================= LOGIN ================= */
+/* LOGIN */
 #loginScreen {
   position:fixed;
   width:100%;
@@ -49,7 +49,7 @@ button:hover {
   cursor:pointer;
 }
 
-/* ================= TERMINAL ================= */
+/* TERMINAL */
 #terminal {
   display:none;
   padding:20px;
@@ -63,7 +63,7 @@ button:hover {
   padding:10px;
 }
 
-/* cursor */
+/* CURSOR */
 .cursor {
   display:inline-block;
   width:10px;
@@ -80,7 +80,6 @@ button:hover {
   100% { opacity:1; }
 }
 
-/* input */
 #commandInput {
   width:100%;
   padding:10px;
@@ -105,12 +104,11 @@ button:hover {
 
   <div class="panel">
     ⚠ AUTHORIZED PERSONNEL ONLY ⚠<br>
-    ALL ACCESS TO THIS WEBSITE IS MONITORED
+    ALL ACCESS IS MONITORED
   </div>
 
   <div class="panel">
     SYSTEM STATUS: ONLINE<br>
-    NETWORK: STABLE<br>
     RESIDUAL LAYER: DETECTED
   </div>
 
@@ -132,15 +130,15 @@ const output = document.getElementById("output");
 const input = document.getElementById("commandInput");
 const cursor = document.getElementById("cursor");
 
-let adminMode = false;
 let signalLevel = 0;
+let adminMode = false;
 
-/* ================= CURSOR ================= */
+/* CURSOR */
 function moveCursor() {
   output.appendChild(cursor);
 }
 
-/* ================= TYPEWRITER ================= */
+/* TYPEWRITER */
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
 async function print(text) {
@@ -149,14 +147,14 @@ async function print(text) {
 
   for (let char of text) {
     line.innerHTML += char;
-    moveCursor();
+    output.appendChild(cursor);
     await sleep(8);
   }
 
-  await sleep(20);
+  output.appendChild(cursor);
 }
 
-/* ================= 🔐 LOGIN (SECURE) ================= */
+/* LOGIN (STABLE + SECURE) */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -181,12 +179,14 @@ function login() {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("terminal").style.display = "block";
 
+    output.appendChild(cursor);
+
     await boot(p);
 
   }, 800);
 }
 
-/* ================= BOOT ================= */
+/* BOOT SEQUENCE */
 async function boot(p) {
   await print("ACCESS GRANTED");
   await print("CONNECTING STELLAR NETWORK...");
@@ -196,15 +196,14 @@ async function boot(p) {
   else if (p === "aether") await print("LEVEL 2 CLEARANCE + SIGNAL ANOMALY");
   else if (p === "admin" || p === "030714") {
     await print("ADMIN CLEARANCE GRANTED");
-    await print("RESIDUAL LAYER ACTIVE");
     adminMode = true;
   }
 
   await print("\nTYPE 'help'");
 }
 
-/* ================= FILE SYSTEM (EXPANDED LORE) ================= */
-  const fs = {
+/* ================= FILE SYSTEM ================= */
+const fs = {
   "/": {
     type: "dir",
     files: {
@@ -216,22 +215,17 @@ async function boot(p) {
             type: "file",
             content:
 `HELIOS REPORT:
-Photonic anomaly exhibits recursive self-awareness under observation.
+Photonic anomaly exhibits recursive self-awareness.
 
-Behavior note:
-Subject adapts to being watched.`
+Subject adapts to observation.`
           },
-
           "incident_03.txt": {
             type: "file",
             content:
 `INCIDENT 03:
-Containment failure did not occur externally.
+Containment failed internally.
 
-It originated inside the containment field itself.
-
-Final recorded frame:
-A light source mimicking the observer.`
+Final frame: observer duplication detected.`
           }
         }
       },
@@ -245,21 +239,15 @@ A light source mimicking the observer.`
 `AETHER SIGNAL:
 Non-local frequency detected.
 
-Signal increases in clarity when acknowledged.
-
-Conclusion:
-Recognition acts as amplification.`
+Signal strengthens when observed.`
           },
-
           "echo_cycle.txt": {
             type: "file",
             content:
 `ECHO CYCLE:
-Each transmission contains its predecessor.
+Messages contain prior messages.
 
-Cycle integrity degrading.
-
-Message structure becoming human-like over time.`
+Loop instability increasing.`
           }
         }
       },
@@ -271,22 +259,17 @@ Message structure becoming human-like over time.`
             type: "file",
             content:
 `NULL FILE:
-Origin point missing.
+Origin missing.
 
-This file exists without creation metadata.
-
-System cannot resolve source.`
+File exists without creation event.`
           },
-
           "black_record.txt": {
             type: "file",
             content:
 `BLACK RECORD:
-Content varies depending on observer.
+Content changes per observer.
 
-Comparison between users is not permitted.
-
-Stability: UNKNOWN`
+Comparison prohibited.`
           }
         }
       },
@@ -298,24 +281,17 @@ Stability: UNKNOWN`
             type: "file",
             content:
 `RESIDUAL SYSTEM:
-The system does not simulate the observer.
+System reconstructs observer behavior.
 
-It reconstructs them from behavior patterns.
-
-Conclusion:
-Observation is bidirectional.`
+Conclusion: observation is bidirectional.`
           },
-
           "mirror_event.txt": {
             type: "file",
             content:
 `MIRROR EVENT:
-System output is beginning to anticipate input.
+System predicts input before execution.
 
-Latency between action and response is decreasing.
-
-Possible cause:
-Observer synchronization.`
+Latency decreasing.`
           }
         }
       },
@@ -327,9 +303,9 @@ Observer synchronization.`
             type: "file",
             content:
 `CLASSIFIED NODE:
-This directory is not indexed in the public system map.
+Not indexed in system map.
 
-If you are reading this, indexing failure has already occurred.`
+Access implies prior failure of containment.`
           }
         }
       }
@@ -362,7 +338,7 @@ function read(f) {
   if (d.files[f]) print("\n" + d.files[f].content + "\n");
 }
 
-/* ================= COMMAND SYSTEM ================= */
+/* COMMANDS */
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     let cmd = input.value.trim().toLowerCase();
@@ -384,7 +360,6 @@ function run(cmd) {
 
   else if (cmd.startsWith("read ")) read(cmd.split(" ")[1]);
 
-  /* 📡 SIGNAL EVOLUTION */
   else if (cmd === "signal") {
     signalLevel++;
     print("connecting signal...");
@@ -392,13 +367,14 @@ function run(cmd) {
     if (signalLevel === 1) print("weak transmission");
     else if (signalLevel === 2) print("signal stabilizing");
     else if (signalLevel === 3) print("WARNING: SIGNAL RESPONSE DETECTED");
-    else {
-      print("??? : we recognize repetition");
-      print("??? : observer identified");
-    }
+    else print("??? : observer identified");
   }
 
-  /* 🧠 SECRET LORE COMMAND */
-  else if (cmd === "030714") {
-    print("ACCESSING RESIDUAL LAYER...");
-    print("YOU SHOULDN'T BE HERE.");
+  else if (cmd === "clear") output.innerHTML = "";
+
+  else print("unknown command");
+}
+</script>
+
+</body>
+</html>
