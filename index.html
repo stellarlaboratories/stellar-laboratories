@@ -203,7 +203,7 @@ async function boot(p) {
   await print("\nTYPE 'help'");
 }
 
-/* ================= FILE SYSTEM ================= */
+/* ================= FILE SYSTEM ================= */];
 const fs = {
   "/": {
     type: "dir",
@@ -213,7 +213,26 @@ const fs = {
         files: {
           "log1.txt": {
             type: "file",
-            content: "Helios anomaly exhibits self-awareness under observation."
+            content:
+`HELIOS REPORT:
+Photonic anomaly exhibits recursive self-awareness under sustained observation.
+
+NOTE:
+Subject appears to “learn” from being watched.
+
+WARNING:
+Do not maintain visual lock beyond 12 seconds.`
+          },
+
+          "incident_03.txt": {
+            type: "file",
+            content:
+`INCIDENT 03 - HELIOS:
+Containment field did not fail.
+It was overwritten from inside.
+
+All monitoring equipment recorded identical final frame:
+a light source mimicking the observer.`
           }
         }
       },
@@ -223,7 +242,48 @@ const fs = {
         files: {
           "signal.txt": {
             type: "file",
-            content: "Aether responds when acknowledged."
+            content:
+`AETHER SIGNAL LOG:
+Frequency pattern does not originate from known spatial coordinates.
+
+It responds to recognition.
+
+The moment it is acknowledged, it becomes stronger.`
+          },
+
+          "echo_cycle.txt": {
+            type: "file",
+            content:
+`ECHO CYCLE:
+Each transmission contains previous transmission embedded inside it.
+
+Cycle repeats with increasing clarity of human language structure.`
+          }
+        }
+      },
+
+      null: {
+        type: "dir",
+        files: {
+          "corrupt.dat": {
+            type: "file",
+            content:
+`NULL FILE:
+Origin point missing.
+
+System note:
+This file was never created, yet persists in memory allocation.`
+          },
+
+          "black_record.txt": {
+            type: "file",
+            content:
+`BLACK RECORD:
+Accessing this file increases system instability.
+
+No known recovery method exists.
+
+Observation: file appears differently per viewer.`
           }
         }
       },
@@ -233,16 +293,47 @@ const fs = {
         files: {
           "observer.log": {
             type: "file",
-            content: "The system is watching the user watching the system."
+            content:
+`RESIDUAL SYSTEM:
+The system does not simulate the observer.
+
+It reconstructs them from behavior patterns.
+
+Conclusion:
+You are not accessing the system.
+The system is accessing you.`
+          },
+
+          "mirror_event.txt": {
+            type: "file",
+            content:
+`MIRROR EVENT:
+Terminal output began reflecting user input before execution.
+
+Time delay between action and response is decreasing.
+
+Possible cause: observer synchronization.`
+          }
+        }
+      },
+
+      classified: {
+        type: "dir",
+        files: {
+          "entry.lock": {
+            type: "file",
+            content:
+`CLASSIFIED NODE:
+This directory is not listed in system index.
+
+If you are reading this, indexing has already failed.`
           }
         }
       }
     }
   }
 };
-
-let path = ["/"];
-
+  
 function dir() {
   let ref = fs["/"];
   for (let i=1;i<path.length;i++) ref = ref.files[path[i]];
@@ -279,7 +370,7 @@ input.addEventListener("keydown", e => {
 function run(cmd) {
 
   if (cmd === "help") {
-    print("ls, cd <folder>, read <file>, clear");
+    print("ls, cd <folder>, read <file>, clear, signal");
   }
 
   else if (cmd === "ls") ls();
@@ -289,7 +380,24 @@ function run(cmd) {
   else if (cmd.startsWith("read ")) read(cmd.split(" ")[1]);
 
   else if (cmd === "clear") output.innerHTML = "";
+    
+  else if (cmd === "signal") {
+  signalLevel++;
+  print("connecting signal...");
 
+  if (signalLevel === 1) print("weak transmission detected");
+  else if (signalLevel === 2) print("signal stabilizing...");
+  else if (signalLevel === 3) print("WARNING: SIGNAL IS RESPONDING");
+  else {
+    print("??? : we recognize repetition");
+    print("??? : observer identified");
+  }
+}
+ 
+  else if (cmd === "030714") {
+  print("ACCESSING HIDDEN RESIDUAL LAYER...");
+  print("YOU SHOULDN'T BE HERE.");
+}
   else print("unknown command");
 }
 </script>
