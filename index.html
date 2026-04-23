@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Stellar Laboratories // Secure Gateway</title>
+<title>Stellar Laboratories // Clearance Node</title>
 
 <style>
 body {
@@ -12,7 +12,7 @@ body {
   color:#00ffcc;
 }
 
-/* LOGIN GATE */
+/* 🏛️ GOVERNMENT LOGIN UI */
 #loginScreen {
   position:fixed;
   width:100%;
@@ -25,6 +25,14 @@ body {
   z-index:9999;
 }
 
+.panel {
+  border:1px solid #00ffcc;
+  padding:12px;
+  width:320px;
+  margin:10px;
+  text-align:center;
+}
+
 input, button {
   background:black;
   border:1px solid #00ffcc;
@@ -32,6 +40,7 @@ input, button {
   padding:10px;
   margin-top:10px;
   font-family:monospace;
+  width:200px;
 }
 
 button:hover {
@@ -41,30 +50,27 @@ button:hover {
 }
 
 /* TERMINAL */
-#terminal, #hiddenInterface {
+#terminal {
   display:none;
   padding:20px;
 }
 
-#output, #hiddenOutput {
-  height:65vh;
+#output {
+  height:70vh;
   overflow-y:auto;
   white-space:pre-wrap;
+  border:1px solid #00ffcc;
+  padding:10px;
 }
 
-#commandInput, #hiddenInput {
+#commandInput {
   width:100%;
   padding:10px;
   background:black;
   border:none;
-  border-top:1px solid currentColor;
-  color:inherit;
+  border-top:1px solid #00ffcc;
+  color:#00ffcc;
   outline:none;
-}
-
-/* RESIDUAL SYSTEM */
-#hiddenInterface {
-  color:#ff3b3b;
 }
 
 /* GLITCH */
@@ -82,74 +88,42 @@ button:hover {
 
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- 🏛️ GOVERNMENT LOGIN SCREEN -->
 <div id="loginScreen">
 
-  <!-- HEADER BAR -->
-  <div style="text-align:center; margin-bottom:20px;">
-    <h2 style="letter-spacing:3px;">UNITED SYSTEMS CLEARANCE PORTAL</h2>
-    <p style="opacity:0.7;">Stellar Laboratories Division // Secure Access Node</p>
+  <div class="panel">
+    <h2>UNITED SYSTEMS CLEARANCE PORTAL</h2>
+    <p>Stellar Laboratories Secure Access Node</p>
   </div>
 
-  <!-- WARNING PANEL -->
-  <div style="border:1px solid #00ffcc; padding:10px; width:300px; text-align:center; margin-bottom:15px;">
-    ⚠ AUTHORIZED PERSONNEL ONLY ⚠
-    <br>
-    UNAUTHORIZED ACCESS IS MONITORED
+  <div class="panel">
+    ⚠ AUTHORIZED PERSONNEL ONLY ⚠<br>
+    ALL ACCESS IS LOGGED AND MONITORED
   </div>
 
-  <!-- STATUS PANEL -->
-  <div style="border:1px solid #00ffcc; padding:10px; width:300px; margin-bottom:15px;">
+  <div class="panel">
     SYSTEM STATUS: ONLINE<br>
     NETWORK: STABLE<br>
     RESIDUAL LAYER: <span class="glitch">DETECTED</span>
   </div>
 
-  <!-- LOGIN BOX -->
-  <div style="display:flex; flex-direction:column; align-items:center;">
+  <input type="password" id="password" placeholder="Enter Clearance Code">
+  <button onclick="login()">AUTHENTICATE</button>
 
-    <input type="password" id="password" placeholder="Enter Clearance Code">
+  <p id="msg"></p>
+</div>
 
-    <button onclick="login()">AUTHENTICATE</button>
-
-    <p id="msg" style="margin-top:10px; color:#ff3b3b;"></p>
-
-  </div>
-
-  <!-- FOOTER NOTE -->
-  <p style="margin-top:20px; font-size:12px; opacity:0.5; text-align:center;">
-    All access attempts are logged and reviewed by Stellar Oversight Division
-  </p>
-
+<!-- 💻 TERMINAL -->
+<div id="terminal">
+  <div id="output"></div>
+  <input id="commandInput" placeholder="type command...">
 </div>
 
 <script>
 const output = document.getElementById("output");
 const input = document.getElementById("commandInput");
 
-const hiddenUI = document.getElementById("hiddenInterface");
-const hiddenOutput = document.getElementById("hiddenOutput");
-const hiddenInput = document.getElementById("hiddenInput");
-
-let signalCount = 0;
 let adminMode = false;
-
-/* INPUT */
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    process(input.value.trim().toLowerCase());
-    print("> " + input.value);
-    input.value = "";
-  }
-});
-
-hiddenInput.addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    processHidden(hiddenInput.value.trim().toLowerCase());
-    hiddenPrint("> " + hiddenInput.value);
-    hiddenInput.value = "";
-  }
-});
 
 /* PRINT */
 function print(t){
@@ -157,12 +131,7 @@ function print(t){
   output.scrollTop = output.scrollHeight;
 }
 
-function hiddenPrint(t){
-  hiddenOutput.innerHTML += t + "<br>";
-  hiddenOutput.scrollTop = hiddenOutput.scrollHeight;
-}
-
-/* 🔐 FIXED LOGIN SYSTEM */
+/* 🔐 FIXED GOVERNMENT LOGIN */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -176,6 +145,9 @@ function login() {
 
   setTimeout(() => {
 
+    const loginScreen = document.getElementById("loginScreen");
+    const terminal = document.getElementById("terminal");
+
     if (
       p === "helios" ||
       p === "aether" ||
@@ -183,26 +155,25 @@ function login() {
       p === "030714"
     ) {
 
-      document.getElementById("loginScreen").style.display = "none";
-      document.getElementById("terminal").style.display = "block";
+      // 🔐 SAFE SWITCH (NO BLACK SCREEN BUG)
+      loginScreen.style.display = "none";
+      terminal.style.display = "block";
 
       print("ACCESS GRANTED");
       print("CONNECTING STELLAR NETWORK...");
-      print("SYSTEM SYNC COMPLETE");
+      print("CLEARANCE VERIFIED");
 
       if (p === "helios") print("LEVEL 1 ACCESS");
       else if (p === "aether") print("LEVEL 2 ACCESS + SIGNAL ANOMALY");
       else if (p === "admin" || p === "030714") {
         print("ADMIN ACCESS GRANTED");
-        print("WARNING: RESIDUAL LINK ACTIVE");
+        print("RESIDUAL LINK ACTIVE");
         adminMode = true;
       }
 
       print("\nType 'help'");
 
-    }
-
-    else {
+    } else {
       msg.innerText = "ACCESS DENIED";
       document.getElementById("password").value = "";
     }
@@ -210,63 +181,49 @@ function login() {
   }, 900);
 }
 
-/* MAIN SYSTEM */
+/* COMMAND SYSTEM */
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    const cmd = input.value.trim().toLowerCase();
+    print("> " + cmd);
+    process(cmd);
+    input.value = "";
+  }
+});
+
 function process(cmd) {
 
   if (cmd === "help") {
-    print("help, projects, logs, files, signal, null, override, clear");
+    print("commands: help, projects, logs, signal, clear");
 
     if (adminMode) {
-      print("inspect, override-core, trace");
+      print("admin: inspect, trace, override-core");
     }
   }
 
   else if (cmd === "projects") {
-    print("HELIOS / AETHER / NULL SYSTEMS ACTIVE");
+    print("HELIOS / AETHER / NULL SYSTEMS");
   }
 
   else if (cmd === "logs") {
-    print("Pattern key: 030714");
-  }
-
-  else if (cmd === "files") {
-    print("/helios/");
-    print("/aether/");
-    print("/null/");
-    print("/restricted/");
+    print("pattern key: 030714");
   }
 
   else if (cmd === "signal") {
-    signalCount++;
     print("connecting signal...");
-
-    if (signalCount > 2) {
-      print("...it is responding");
-      glitch();
-    }
-  }
-
-  else if (cmd === "null") {
-    print("NULL SYSTEM ACCESSED");
-  }
-
-  else if (cmd === "override") {
-    document.getElementById("terminal").style.display = "none";
-    hiddenUI.style.display = "block";
-    startHidden();
+    print("response unstable...");
   }
 
   else if (cmd === "inspect" && adminMode) {
     print("SYSTEM IS OBSERVING BACK");
   }
 
-  else if (cmd === "override-core" && adminMode) {
-    print("CORE OVERRIDE INITIATED");
-    glitch();
-  }
-
   else if (cmd === "trace" && adminMode) {
     print("ORIGIN: YOU");
+  }
+
+  else if (cmd === "override-core" && adminMode) {
+    print("CORE OVERRIDE INITIATED");
   }
 
   else if (cmd === "clear") {
@@ -276,27 +233,6 @@ function process(cmd) {
   else {
     print("unknown command");
   }
-}
-
-/* GLITCH */
-function glitch() {
-  document.body.classList.add("glitch");
-
-  setTimeout(() => {
-    document.body.classList.remove("glitch");
-    print("\n??? : observation detected");
-  }, 1000);
-}
-
-/* HIDDEN SYSTEM */
-function startHidden() {
-  hiddenPrint("RESIDUAL SYSTEM ACTIVE");
-  hiddenPrint("YOU ARE NOT ALONE HERE");
-}
-
-function processHidden(cmd) {
-  hiddenPrint("> " + cmd);
-  hiddenPrint("we are still here");
 }
 </script>
 
