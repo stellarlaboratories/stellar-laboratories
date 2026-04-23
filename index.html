@@ -105,7 +105,7 @@ button:hover {
 
   <div class="panel">
     ⚠ AUTHORIZED PERSONNEL ONLY ⚠<br>
-    ALL ACCESS IS MONITORED
+    ALL ACCESS TO THIS WEBISTE IS MONITORED
   </div>
 
   <div class="panel">
@@ -156,7 +156,7 @@ async function print(text) {
   await sleep(20);
 }
 
-/* ================= LOGIN (SECURE) ================= */
+/* ================= 🔐 LOGIN (SECURE) ================= */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
@@ -175,7 +175,7 @@ function login() {
     if (!valid.includes(p)) {
       msg.innerText = "ACCESS DENIED";
       document.getElementById("password").value = "";
-      return; // ❌ HARD STOP = no bypass
+      return;
     }
 
     document.getElementById("loginScreen").style.display = "none";
@@ -188,22 +188,22 @@ function login() {
 
 /* ================= BOOT ================= */
 async function boot(p) {
-
   await print("ACCESS GRANTED");
   await print("CONNECTING STELLAR NETWORK...");
-  await print("LOADING FILE SYSTEM...\n");
+  await print("LOADING ARCHIVE FILE SYSTEM...\n");
 
   if (p === "helios") await print("LEVEL 1 CLEARANCE");
   else if (p === "aether") await print("LEVEL 2 CLEARANCE + SIGNAL ANOMALY");
   else if (p === "admin" || p === "030714") {
     await print("ADMIN CLEARANCE GRANTED");
+    await print("RESIDUAL LAYER ACTIVE");
     adminMode = true;
   }
 
   await print("\nTYPE 'help'");
 }
 
-/* ================= FILE SYSTEM ================= */];
+/* ================= FILE SYSTEM (EXPANDED LORE) ================= */
 const fs = {
   "/": {
     type: "dir",
@@ -215,24 +215,19 @@ const fs = {
             type: "file",
             content:
 `HELIOS REPORT:
-Photonic anomaly exhibits recursive self-awareness under sustained observation.
-
-NOTE:
-Subject appears to “learn” from being watched.
+Photonic anomaly exhibits recursive awareness under observation.
 
 WARNING:
-Do not maintain visual lock beyond 12 seconds.`
+Subject appears to adapt to being watched.`
           },
-
           "incident_03.txt": {
             type: "file",
             content:
-`INCIDENT 03 - HELIOS:
-Containment field did not fail.
-It was overwritten from inside.
+`INCIDENT 03:
+Containment failure recorded.
 
-All monitoring equipment recorded identical final frame:
-a light source mimicking the observer.`
+Final frame:
+a light source imitating the observer.`
           }
         }
       },
@@ -243,21 +238,18 @@ a light source mimicking the observer.`
           "signal.txt": {
             type: "file",
             content:
-`AETHER SIGNAL LOG:
-Frequency pattern does not originate from known spatial coordinates.
+`AETHER SIGNAL:
+Non-local frequency detected.
 
-It responds to recognition.
-
-The moment it is acknowledged, it becomes stronger.`
+It strengthens when acknowledged.`
           },
-
           "echo_cycle.txt": {
             type: "file",
             content:
 `ECHO CYCLE:
-Each transmission contains previous transmission embedded inside it.
+Each message contains the previous message.
 
-Cycle repeats with increasing clarity of human language structure.`
+Loop stability decreasing.`
           }
         }
       },
@@ -269,21 +261,18 @@ Cycle repeats with increasing clarity of human language structure.`
             type: "file",
             content:
 `NULL FILE:
-Origin point missing.
+Origin missing.
 
 System note:
-This file was never created, yet persists in memory allocation.`
+File exists without creation event.`
           },
-
           "black_record.txt": {
             type: "file",
             content:
 `BLACK RECORD:
-Accessing this file increases system instability.
+Content varies per observation.
 
-No known recovery method exists.
-
-Observation: file appears differently per viewer.`
+Do not compare outputs between users.`
           }
         }
       },
@@ -297,22 +286,15 @@ Observation: file appears differently per viewer.`
 `RESIDUAL SYSTEM:
 The system does not simulate the observer.
 
-It reconstructs them from behavior patterns.
-
-Conclusion:
-You are not accessing the system.
-The system is accessing you.`
+It reconstructs them from interaction patterns.`
           },
-
           "mirror_event.txt": {
             type: "file",
             content:
 `MIRROR EVENT:
-Terminal output began reflecting user input before execution.
+System output begins anticipating input.
 
-Time delay between action and response is decreasing.
-
-Possible cause: observer synchronization.`
+Latency decreasing.`
           }
         }
       },
@@ -324,16 +306,18 @@ Possible cause: observer synchronization.`
             type: "file",
             content:
 `CLASSIFIED NODE:
-This directory is not listed in system index.
+Not indexed in system registry.
 
-If you are reading this, indexing has already failed.`
+If accessed, indexing has already failed.`
           }
         }
       }
     }
   }
 };
-  
+
+let path = ["/"];
+
 function dir() {
   let ref = fs["/"];
   for (let i=1;i<path.length;i++) ref = ref.files[path[i]];
@@ -357,7 +341,7 @@ function read(f) {
   if (d.files[f]) print("\n" + d.files[f].content + "\n");
 }
 
-/* ================= COMMANDS ================= */
+/* ================= COMMAND SYSTEM ================= */
 input.addEventListener("keydown", e => {
   if (e.key === "Enter") {
     let cmd = input.value.trim().toLowerCase();
@@ -379,28 +363,21 @@ function run(cmd) {
 
   else if (cmd.startsWith("read ")) read(cmd.split(" ")[1]);
 
-  else if (cmd === "clear") output.innerHTML = "";
-    
+  /* 📡 SIGNAL EVOLUTION */
   else if (cmd === "signal") {
-  signalLevel++;
-  print("connecting signal...");
+    signalLevel++;
+    print("connecting signal...");
 
-  if (signalLevel === 1) print("weak transmission detected");
-  else if (signalLevel === 2) print("signal stabilizing...");
-  else if (signalLevel === 3) print("WARNING: SIGNAL IS RESPONDING");
-  else {
-    print("??? : we recognize repetition");
-    print("??? : observer identified");
+    if (signalLevel === 1) print("weak transmission");
+    else if (signalLevel === 2) print("signal stabilizing");
+    else if (signalLevel === 3) print("WARNING: SIGNAL RESPONSE DETECTED");
+    else {
+      print("??? : we recognize repetition");
+      print("??? : observer identified");
+    }
   }
-}
- 
-  else if (cmd === "030714") {
-  print("ACCESSING HIDDEN RESIDUAL LAYER...");
-  print("YOU SHOULDN'T BE HERE.");
-}
-  else print("unknown command");
-}
-</script>
 
-</body>
-</html>
+  /* 🧠 SECRET LORE COMMAND */
+  else if (cmd === "030714") {
+    print("ACCESSING RESIDUAL LAYER...");
+    print("YOU SHOULDN'T BE HERE.");
