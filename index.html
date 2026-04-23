@@ -200,6 +200,7 @@ async function boot(p) {
   }
 
   await print("\nTYPE 'help'");
+  await print("ACCESS PERSONNEL ARCHIVE: TYPE 'staff' OR OPEN /scientist.html");
 }
 
 /* ================= FILE SYSTEM ================= */
@@ -352,6 +353,7 @@ function run(cmd) {
 
   if (cmd === "help") {
     print("ls, cd <folder>, read <file>, clear, signal");
+    print("hint: staff / personnel archive available");
   }
 
   else if (cmd === "ls") ls();
@@ -372,9 +374,7 @@ function run(cmd) {
 
   else if (cmd === "clear") output.innerHTML = "";
 
-  else print("unknown command");
+  else if (cmd === "staff") {
+  print("REDIRECTING TO PERSONNEL ARCHIVE...");
+  window.location.href = "scientist.html";
 }
-</script>
-
-</body>
-</html>
