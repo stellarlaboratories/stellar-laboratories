@@ -6,8 +6,8 @@
   <style>
     body {
       margin: 0;
-      background: black;
-      font-family: monospace;
+      background: #121212;
+      font-family: 'Courier New', monospace;
       color: #00ffcc;
     }
 
@@ -20,7 +20,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: black;
+      background: #121212;
       z-index: 9999;
     }
 
@@ -30,28 +30,37 @@
       width: 340px;
       margin: 10px;
       text-align: center;
+      background: rgba(0, 255, 204, 0.1); /* Slight transparent background */
+      border-radius: 8px;
     }
 
     input, button {
-      background: black;
+      background: #121212;
       border: 1px solid #00ffcc;
       color: #00ffcc;
       padding: 10px;
       margin-top: 10px;
       font-family: monospace;
       width: 220px;
+      border-radius: 8px;
     }
 
     button:hover {
       background: #00ffcc;
       color: black;
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
     }
 
     /* TERMINAL */
     #terminal {
       display: none;
       padding: 20px;
+      background: #1b1b1b;
+      border-radius: 8px;
+      width: 80%;
+      margin: 0 auto;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.4);
     }
 
     #output {
@@ -59,14 +68,19 @@
       overflow-y: auto;
       white-space: pre-wrap;
       border: 1px solid #00ffcc;
-      padding: 10px;
+      padding: 20px;
+      background: #0c0c0c;
+      border-radius: 8px;
+      font-size: 16px;
+      color: #00ffcc;
+      box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.3);
     }
 
     /* CURSOR */
     .cursor {
       display: inline-block;
       width: 10px;
-      height: 14px;
+      height: 16px;
       background: #00ffcc;
       margin-left: 3px;
       animation: blink 0.8s infinite;
@@ -81,13 +95,33 @@
 
     #commandInput {
       width: 100%;
-      padding: 10px;
-      background: black;
-      border: none;
-      border-top: 1px solid #00ffcc;
+      padding: 12px;
+      background: #121212;
+      border: 1px solid #00ffcc;
       color: #00ffcc;
       outline: none;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 12px;
     }
+
+    /* Input focus effect */
+    #commandInput:focus {
+      border-color: #33ff99;
+      box-shadow: 0 0 5px rgba(51, 255, 153, 0.5);
+    }
+
+    /* Adding a cool background animation to terminal */
+    @keyframes bgAnim {
+      0% { background-color: #0c0c0c; }
+      50% { background-color: #131313; }
+      100% { background-color: #0c0c0c; }
+    }
+
+    #terminal {
+      animation: bgAnim 3s infinite;
+    }
+
   </style>
 </head>
 
