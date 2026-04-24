@@ -111,17 +111,6 @@
       box-shadow: 0 0 5px rgba(51, 255, 153, 0.5);
     }
 
-    /* Adding a cool background animation to terminal */
-    @keyframes bgAnim {
-      0% { background-color: #0c0c0c; }
-      50% { background-color: #131313; }
-      100% { background-color: #0c0c0c; }
-    }
-
-    #terminal {
-      animation: bgAnim 3s infinite;
-    }
-
   </style>
 </head>
 
@@ -215,7 +204,6 @@ function login() {
       if (failedAttempts >= 3) {
         print("WARNING: Multiple failed access attempts detected.");
         print("ALERT: SYSTEM LOCKDOWN INITIATED!");
-        // Add red flashing warning effects or system shutdown here
       }
       document.getElementById("password").value = "";
       return;
@@ -236,7 +224,9 @@ function login() {
 
 /* BOOT */
 async function boot(p) {
-  await print("ACCESS GRANTED");
+  await print("Booting to MS-DOS 6.22...");
+  await print("Copyright (c) Microsoft Corp 1981-1994.");
+  await print("\nACCESS GRANTED");
   await print("CONNECTING STELLAR NETWORK...");
   await print("LOADING ARCHIVE FILE SYSTEM...\n");
 
@@ -272,7 +262,13 @@ const fs = {
         type: "dir",
         files: {
           "observer.log": { type: "file", content: "System reconstructs observer behavior." },
-          "encrypted.txt": { type: "file", content: "ENCRYPTED: 4a63bbf7bd31321b" } // example encrypted content
+          "encrypted.txt": { type: "file", content: "ENCRYPTED: 4a63bbf7bd31321b" }
+        }
+      },
+      stellar: {
+        type: "dir",
+        files: {
+          "founder.txt": { type: "file", content: "STELLAR: Founder of Stellar Laboratories. The visionary behind the study of signal anomalies and residual consciousness. Believed that through technology, humanity could commune with forgotten realms and even manipulate reality itself. Disappeared under mysterious circumstances during a failed experiment in 1994." }
         }
       }
     }
@@ -319,6 +315,7 @@ function run(cmd) {
   if (cmd === "help") {
     print("ls, cd <folder>, read <file>, clear, signal, decrypt <file>");
     print("hint: staff / personnel archive available");
+    print("new: info, shutdown");
   }
 
   else if (cmd === "ls") ls();
@@ -349,6 +346,28 @@ function run(cmd) {
       print("DECRYPTION COMPLETE: This file contains a critical secret. Proceed with caution.");
       print("Encrypted Data: 4a63bbf7bd31321b -> UNLOCKED: SYSTEM FAILURE IMMINENT.");
     }
+  }
+
+  else if (cmd === "shutdown") {
+    print("Shutting down system...");
+    print("Critical system failure detected. Entity interference detected during shutdown sequence.");
+    print("WARNING: Shutdown will trigger residual echo amplification. Possible consequences for system and observer.");
+    print("System shutdown complete.");
+  }
+
+  else if (cmd === "info") {
+    print("Stellar Laboratories: Official Research Node.");
+    print("Primary Research Focus: ");
+    print("- Signal Anomalies");
+    print("- Dimensional Echoes");
+    print("- Observer Effect");
+    print("- Interaction with entities beyond our realm");
+    print("\nPersonnel involved in this project:");
+    print("- Dr. Eleanor Helios (Lead Researcher) - Subject Helios Experiment");
+    print("- Dr. Lucius Aether (Signal Specialist) - Aether Signal Analysis");
+    print("- Dr. Miles Residual (System Architect) - Residual Layer Detection");
+    print("\nFounder: Stellar");
+    print("Founder’s Biography: A visionary scientist who believed that technology could unlock gateways to alternate dimensions. Disappeared mysteriously in 1994 under unknown circumstances.");
   }
 
   else if (cmd === "clear") {
