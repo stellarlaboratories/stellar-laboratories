@@ -1,102 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Stellar Laboratories // Clearance Node</title>
+  <meta charset="UTF-8">
+  <title>Stellar Laboratories // Clearance Node</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      font-family: monospace;
+      color: #00ffcc;
+    }
 
-<style>
-body {
-  margin:0;
-  background:black;
-  font-family:monospace;
-  color:#00ffcc;
-}
+    /* LOGIN */
+    #loginScreen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: black;
+      z-index: 9999;
+    }
 
-/* LOGIN */
-#loginScreen {
-  position:fixed;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  background:black;
-  z-index:9999;
-}
+    .panel {
+      border: 1px solid #00ffcc;
+      padding: 12px;
+      width: 340px;
+      margin: 10px;
+      text-align: center;
+    }
 
-.panel {
-  border:1px solid #00ffcc;
-  padding:12px;
-  width:340px;
-  margin:10px;
-  text-align:center;
-}
+    input, button {
+      background: black;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 10px;
+      margin-top: 10px;
+      font-family: monospace;
+      width: 220px;
+    }
 
-input, button {
-  background:black;
-  border:1px solid #00ffcc;
-  color:#00ffcc;
-  padding:10px;
-  margin-top:10px;
-  font-family:monospace;
-  width:220px;
-}
+    button:hover {
+      background: #00ffcc;
+      color: black;
+      cursor: pointer;
+    }
 
-button:hover {
-  background:#00ffcc;
-  color:black;
-  cursor:pointer;
-}
+    /* TERMINAL */
+    #terminal {
+      display: none;
+      padding: 20px;
+    }
 
-/* TERMINAL */
-#terminal {
-  display:none;
-  padding:20px;
-}
+    #output {
+      height: 70vh;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+    }
 
-#output {
-  height:70vh;
-  overflow-y:auto;
-  white-space:pre-wrap;
-  border:1px solid #00ffcc;
-  padding:10px;
-}
+    /* CURSOR */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 14px;
+      background: #00ffcc;
+      margin-left: 3px;
+      animation: blink 0.8s infinite;
+      vertical-align: bottom;
+    }
 
-/* CURSOR */
-.cursor {
-  display:inline-block;
-  width:10px;
-  height:14px;
-  background:#00ffcc;
-  margin-left:3px;
-  animation: blink 0.8s infinite;
-  vertical-align:bottom;
-}
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
-@keyframes blink {
-  0% { opacity:1; }
-  50% { opacity:0; }
-  100% { opacity:1; }
-}
-
-#commandInput {
-  width:100%;
-  padding:10px;
-  background:black;
-  border:none;
-  border-top:1px solid #00ffcc;
-  color:#00ffcc;
-  outline:none;
-}
-</style>
+    #commandInput {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      border: none;
+      border-top: 1px solid #00ffcc;
+      color: #00ffcc;
+      outline: none;
+    }
+  </style>
 </head>
 
 <body>
 
 <!-- LOGIN -->
 <div id="loginScreen">
-
   <div class="panel">
     <h2>UNITED SYSTEMS CLEARANCE PORTAL</h2>
     <p>Stellar Laboratories Secure Node</p>
@@ -132,6 +130,7 @@ const cursor = document.getElementById("cursor");
 
 let signalLevel = 0;
 let adminMode = false;
+let failedAttempts = 0;
 
 /* CURSOR */
 function moveCursor() {
@@ -139,7 +138,7 @@ function moveCursor() {
 }
 
 /* TYPEWRITER */
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 async function print(text) {
   const line = document.createElement("div");
@@ -154,27 +153,42 @@ async function print(text) {
   output.appendChild(cursor);
 }
 
-/* LOGIN (FIXED + STABLE) */
+/* LOGIN (Enhanced Security) */
 function login() {
   const p = document.getElementById("password").value.trim().toLowerCase();
   const msg = document.getElementById("msg");
 
   const valid = ["helios", "aether", "admin", "030714"];
+  const systemResponses = [
+    "ACCESS CODE REQUIRED",
+    "AUTHENTICATING...",
+    "ACCESS DENIED",
+    "WARNING: Unauthorized access attempt detected. SECURITY PROTOCOL ACTIVATED."
+  ];
 
   if (!p) {
-    msg.innerText = "ACCESS CODE REQUIRED";
+    msg.innerText = systemResponses[0];
     return;
   }
 
-  msg.innerText = "AUTHENTICATING...";
+  msg.innerText = systemResponses[1];
 
   setTimeout(async () => {
-
     if (!valid.includes(p)) {
-      msg.innerText = "ACCESS DENIED";
+      msg.innerText = systemResponses[2];
+      failedAttempts++;
+      
+      if (failedAttempts >= 3) {
+        print("WARNING: Multiple failed access attempts detected.");
+        print("ALERT: SYSTEM LOCKDOWN INITIATED!");
+        // Add red flashing warning effects or system shutdown here
+      }
       document.getElementById("password").value = "";
       return;
     }
+
+    // Reset failed attempts after successful login
+    failedAttempts = 0;
 
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("terminal").style.display = "block";
@@ -211,19 +225,20 @@ const fs = {
       helios: {
         type: "dir",
         files: {
-          "log1.txt": { type:"file", content:"HELIOS REPORT: Subject adapts to observation." }
+          "log1.txt": { type: "file", content: "HELIOS REPORT: Subject adapts to observation." }
         }
       },
       aether: {
         type: "dir",
         files: {
-          "signal.txt": { type:"file", content:"AETHER SIGNAL: Strength increases when observed." }
+          "signal.txt": { type: "file", content: "AETHER SIGNAL: Strength increases when observed." }
         }
       },
       residual: {
         type: "dir",
         files: {
-          "observer.log": { type:"file", content:"System reconstructs observer behavior." }
+          "observer.log": { type: "file", content: "System reconstructs observer behavior." },
+          "encrypted.txt": { type: "file", content: "ENCRYPTED: 4a63bbf7bd31321b" } // example encrypted content
         }
       }
     }
@@ -234,7 +249,7 @@ let path = ["/"];
 
 function dir() {
   let ref = fs["/"];
-  for (let i=1;i<path.length;i++) ref = ref.files[path[i]];
+  for (let i = 1; i < path.length; i++) ref = ref.files[path[i]];
   return ref;
 }
 
@@ -268,7 +283,7 @@ input.addEventListener("keydown", e => {
 function run(cmd) {
 
   if (cmd === "help") {
-    print("ls, cd <folder>, read <file>, clear, signal");
+    print("ls, cd <folder>, read <file>, clear, signal, decrypt <file>");
     print("hint: staff / personnel archive available");
   }
 
@@ -292,6 +307,14 @@ function run(cmd) {
     setTimeout(() => {
       window.location.href = "scientist.html";
     }, 800);
+  }
+
+  else if (cmd === "decrypt") {
+    let file = cmd.split(" ")[1];
+    if (file === "encrypted.txt") {
+      print("DECRYPTION COMPLETE: This file contains a critical secret. Proceed with caution.");
+      print("Encrypted Data: 4a63bbf7bd31321b -> UNLOCKED: SYSTEM FAILURE IMMINENT.");
+    }
   }
 
   else if (cmd === "clear") {
